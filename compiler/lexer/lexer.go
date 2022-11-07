@@ -6,7 +6,7 @@ import (
 	"github.com/lukekeum/garithmetic/store"
 )
 
-func Execute(content string, tstore []store.Token) {
+func Execute(content string, tstore []store.Token) []store.Token {
 	line := 1
 	bracketNum := 0
 
@@ -42,7 +42,7 @@ func Execute(content string, tstore []store.Token) {
 		} else if content[i] == '/' {
 			if content[i+1] == '/' {
 				for true {
-					if i + 1 >= len(content) {
+					if i+1 >= len(content) {
 						break
 					}
 					if content[i+1] == '\n' {
@@ -73,4 +73,6 @@ func Execute(content string, tstore []store.Token) {
 			panic(fmt.Sprintf("[Error] Unexpected token scanned, line number %d, found: %c", line, content[i]))
 		}
 	}
+
+	return tstore
 }

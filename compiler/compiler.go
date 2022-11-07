@@ -21,7 +21,7 @@ func Execute(fileName string) int {
 	content := string(data[:])
 	store := []store.Token{}
 
-	lexer.Execute(content, store)
+	store = lexer.Execute(content, store)
 
 	return 0
 }
