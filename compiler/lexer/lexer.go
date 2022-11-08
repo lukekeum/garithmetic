@@ -6,17 +6,16 @@ import (
 	"github.com/lukekeum/garithmetic/store"
 )
 
-func Execute(content string, tstore []store.Token) []store.Token {
+func Execute(content string) []store.Token {
 	line := 1
+	parsingLine := 1
 	bracketNum := 0
+
+	tstore := []store.Token{}
 
 	for i := 0; i < len(content); i++ {
 
 		if content[i] == '\n' {
-
-			if tstore[len(tstore)-1].Value != ';' {
-				panic(fmt.Sprintf("[Error] Expected ; but not found, line number %d", line))
-			}
 
 			if bracketNum != 0 {
 				panic(fmt.Sprintf("[Error] Bracket expected token ), line number %d", line))
@@ -38,7 +37,7 @@ func Execute(content string, tstore []store.Token) []store.Token {
 
 			fmt.Printf("[CONST] %s \n", value)
 
-			tstore = append(tstore, *store.New(store.CONST, line, value))
+			tstore = append(tstore, *store.New(store.CONST, line, parsingLine, value))
 		} else if content[i] == '/' {
 			if content[i+1] == '/' {
 				for true {
@@ -54,19 +53,20 @@ func Execute(content string, tstore []store.Token) []store.Token {
 		} else if content[i] == '+' || content[i] == '-' || content[i] == '*' || content[i] == '/' {
 			fmt.Printf("[OPER] %c \n", content[i])
 
-			tstore = append(tstore, *store.New(store.OPER, line, content[i]))
+			tstore = append(tstore, *store.New(store.OPER, line, parsingLine, content[i]))
 		} else if content[i] == '(' {
 			fmt.Printf("[OPER] %c \n", content[i])
 
-			tstore = append(tstore, *store.New(store.OPER, line, '('))
+			tstore = append(tstore, *store.New(store.OPER, line, parsingLine, '('))
 			bracketNum += 1
 		} else if content[i] == ')' {
 			fmt.Printf("[OPER] %c \n", content[i])
-			tstore = append(tstore, *store.New(store.OPER, line, ')'))
+			tstore = append(tstore, *store.New(store.OPER, line, parsingLine, ')'))
 			bracketNum -= 1
 		} else if content[i] == ';' {
 			fmt.Printf("[SEPER] %c \n", content[i])
-			tstore = append(tstore, *store.New(store.SEPER, line, ';'))
+			tstore = append(tstore, *store.New(store.SEPER, line, parsingLine, ';'))
+			parsingLine += 1
 		} else if content[i] == ' ' {
 			continue
 		} else {
