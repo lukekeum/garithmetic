@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/lukekeum/garithmetic/compiler/lexer"
+	"github.com/lukekeum/garithmetic/compiler/parser"
 	"github.com/lukekeum/garithmetic/store"
 )
 
@@ -21,7 +22,9 @@ func Execute(fileName string) int {
 	content := string(data[:])
 	store := []store.Token{}
 
-	store = lexer.Execute(content, store)
+	store = lexer.Execute(content)
+
+	parser.Execute(store)
 
 	return 0
 }
