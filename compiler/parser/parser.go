@@ -7,8 +7,9 @@ import (
 )
 
 type Parser struct {
-	tokenStore []store.Token
-	stack      stack.Stack
+	tokenStore    []store.Token
+	stack         stack.Stack
+	errorMessages []string
 }
 
 func New(store []store.Token) *Parser {
@@ -25,7 +26,7 @@ func (p *Parser) Execute() []*tree.Tree {
 	for i := 0; i < len(tstore); i++ {
 		token := tstore[i]
 		if token.Compare(store.SEPER, store.SEMICOLUMN) {
-			begin, err = p.rootExecute(begin, i, tstore)
+			begin, err = p.rootExecute(begin, i)
 			if err != nil {
 				panic(err)
 			}
