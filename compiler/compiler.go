@@ -24,9 +24,9 @@ func Execute(fileName string) int {
 
 	store = lexer.Execute(content)
 
-	parser := parser.New(store)
+	p := parser.New(store)
 
-	parser.Execute()
+	p.Execute()
 
 	return 0
 }

@@ -20,15 +20,15 @@ func (p *Parser) Execute() []*tree.Tree {
 	tstore := p.tokenStore
 	tree := []*tree.Tree{}
 	begin := 0
+	var err interface{} = nil
 
 	for i := 0; i < len(tstore); i++ {
 		token := tstore[i]
 		if token.Compare(store.SEPER, store.SEMICOLUMN) {
-			t, err := rootExecute(begin, i, tstore)
+			begin, err = p.rootExecute(begin, i, tstore)
 			if err != nil {
 				panic(err)
 			}
-			tree = append(tree, t)
 			begin = i
 		}
 	}
