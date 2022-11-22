@@ -1,60 +1,27 @@
 package stack
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 type Stack struct {
-	stack  []int
+	stack  []string
 	result int
 }
 
 func New() *Stack {
-	var stack []int
+	var stack []string
 	result := 0
 
 	return &Stack{stack, result}
 }
 
-func (s *Stack) Add() {
-	a := s.stack[len(s.stack)-1]
-	s.stack = s.stack[:len(s.stack)-1]
-	b := s.stack[len(s.stack)-1]
-	s.stack = s.stack[:len(s.stack)-1]
-
-	s.stack = append(s.stack, a+b)
-	fmt.Println("add")
-}
-
-func (s *Stack) Sub() {
-	a := s.stack[len(s.stack)-1]
-	s.stack = s.stack[:len(s.stack)-1]
-	b := s.stack[len(s.stack)-1]
-	s.stack = s.stack[:len(s.stack)-1]
-
-	s.stack = append(s.stack, b-a)
-	fmt.Println("sub")
-}
-
-func (s *Stack) Mul() {
-	a := s.stack[len(s.stack)-1]
-	s.stack = s.stack[:len(s.stack)-1]
-	b := s.stack[len(s.stack)-1]
-	s.stack = s.stack[:len(s.stack)-1]
-
-	s.stack = append(s.stack, a*b)
-	fmt.Println("mul")
-}
-
-func (s *Stack) Div() {
-	a := s.stack[len(s.stack)-1]
-	s.stack = s.stack[:len(s.stack)-1]
-	b := s.stack[len(s.stack)-1]
-	s.stack = s.stack[:len(s.stack)-1]
-
-	s.stack = append(s.stack, b/a)
-	fmt.Println("div")
+func (s *Stack) Put(method string) {
+	s.stack = append(s.stack, method)
 }
 
 func (s *Stack) Push(value int) {
-	s.stack = append(s.stack, value)
+	s.stack = append(s.stack, strconv.Itoa(value))
 	fmt.Printf("push %d", value)
 }
