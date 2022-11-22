@@ -1,11 +1,13 @@
 package store
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // 토큰 객체에 대한 정의
 type Token struct {
 	TokenType   TokenType
-	Value       interface{}
+	Value       any
 	Line        int
 	ParsingLine int
 }
@@ -83,7 +85,7 @@ func checkOperValue(value interface{}, line int, parsingLine int) *Token {
 }
 
 func (t *Token) Compare(tokenType TokenType, value interface{}) bool {
-	return t.TokenType == tokenType && t.Value == value
+	return t.TokenType == tokenType && t == value
 }
 
 func (t *Token) CompareType(tokenType TokenType) bool {
