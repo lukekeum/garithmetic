@@ -44,17 +44,15 @@ func Execute(content string) []store.Token {
 			fmt.Printf("[CONST] %s \n", value)
 
 			tstore = append(tstore, *store.New(store.CONST, line, parsingLine, strToInt(value)))
-		} else if content[i] == '/' {
-			if content[i+1] == '/' {
-				for true {
-					if i+1 >= len(content) {
-						break
-					}
-					if content[i+1] == '\n' {
-						break
-					}
-					i += 1
+		} else if content[i] == '/' && content[i+1] == '/' {
+			for true {
+				if i+1 >= len(content) {
+					break
 				}
+				if content[i+1] == '\n' {
+					break
+				}
+				i += 1
 			}
 		} else if content[i] == '+' || content[i] == '-' || content[i] == '*' || content[i] == '/' {
 			fmt.Printf("[OPER] %c \n", content[i])
