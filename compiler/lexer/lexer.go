@@ -34,7 +34,7 @@ func Execute(content string) []store.Token {
 
 			for true {
 				if content[i+1] >= '0' && content[i+1] <= '9' {
-					value += fmt.Sprintf("%c", content[i])
+					value += fmt.Sprintf("%c", content[i+1])
 				} else {
 					break
 				}
