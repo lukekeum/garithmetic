@@ -89,6 +89,9 @@ func (p *Parser) mulExecute(begin int, end int) (int, error) {
 		if token.Compare(store.OPER, store.MULTIPLY) {
 			p.stack.Put("mul")
 		}
+		if token.Compare(store.OPER, store.DIVIDE) {
+			p.stack.Put("div")
+		}
 		i = t
 	}
 
