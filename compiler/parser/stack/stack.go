@@ -2,26 +2,24 @@ package stack
 
 import (
 	"fmt"
-	"strconv"
 )
 
 type Stack struct {
-	stack  []string
-	result int
+	stack []string
 }
 
 func New() *Stack {
 	var stack []string
-	result := 0
 
-	return &Stack{stack, result}
+	return &Stack{stack}
 }
 
 func (s *Stack) Put(method string) {
 	s.stack = append(s.stack, method)
+	fmt.Printf("%s\n", method)
 }
 
-func (s *Stack) Push(value int) {
-	s.stack = append(s.stack, strconv.Itoa(value))
-	fmt.Printf("push %d", value)
+func (s *Stack) Push(value string) {
+	s.stack = append(s.stack, value)
+	fmt.Printf("push %s\n", value)
 }

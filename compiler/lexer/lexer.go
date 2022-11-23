@@ -2,9 +2,15 @@ package lexer
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/lukekeum/garithmetic/store"
 )
+
+func strToInt(s string) int {
+	v, _ := strconv.Atoi(s)
+	return v
+}
 
 func Execute(content string) []store.Token {
 	line := 1
@@ -37,7 +43,7 @@ func Execute(content string) []store.Token {
 
 			fmt.Printf("[CONST] %s \n", value)
 
-			tstore = append(tstore, *store.New(store.CONST, line, parsingLine, value))
+			tstore = append(tstore, *store.New(store.CONST, line, parsingLine, strToInt(value)))
 		} else if content[i] == '/' {
 			if content[i+1] == '/' {
 				for true {
@@ -53,19 +59,19 @@ func Execute(content string) []store.Token {
 		} else if content[i] == '+' || content[i] == '-' || content[i] == '*' || content[i] == '/' {
 			fmt.Printf("[OPER] %c \n", content[i])
 
-			tstore = append(tstore, *store.New(store.OPER, line, parsingLine, content[i]))
+			tstore = append(tstore, *store.New(store.OPER, line, parsingLine, int(rune(content[i]))))
 		} else if content[i] == '(' {
 			fmt.Printf("[OPER] %c \n", content[i])
 
-			tstore = append(tstore, *store.New(store.OPER, line, parsingLine, '('))
+			tstore = append(tstore, *store.New(store.OPER, line, parsingLine, int('(')))
 			bracketNum += 1
 		} else if content[i] == ')' {
 			fmt.Printf("[OPER] %c \n", content[i])
-			tstore = append(tstore, *store.New(store.OPER, line, parsingLine, ')'))
+			tstore = append(tstore, *store.New(store.OPER, line, parsingLine, int(')')))
 			bracketNum -= 1
 		} else if content[i] == ';' {
 			fmt.Printf("[SEPER] %c \n", content[i])
-			tstore = append(tstore, *store.New(store.SEPER, line, parsingLine, ';'))
+			tstore = append(tstore, *store.New(store.SEPER, line, parsingLine, int(';')))
 			parsingLine += 1
 		} else if content[i] == ' ' {
 			continue

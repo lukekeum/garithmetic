@@ -1,9 +1,10 @@
 package parser
 
 import (
+	"fmt"
+
 	"github.com/lukekeum/garithmetic/compiler/parser/stack"
 	"github.com/lukekeum/garithmetic/store"
-	"github.com/lukekeum/garithmetic/tree"
 )
 
 type Parser struct {
@@ -17,22 +18,21 @@ func New(store []store.Token) *Parser {
 	return &Parser{tokenStore: store, stack: stack}
 }
 
-func (p *Parser) Execute() []*tree.Tree {
-	tstore := p.tokenStore
-	tree := []*tree.Tree{}
+func (p *Parser) Execute() {
+	fmt.Printf("Start Parsing, (token_size=%d)\n", len(p.tokenStore))
 	begin := 0
-	var err interface{} = nil
 
-	for i := 0; i < len(tstore); i++ {
-		token := tstore[i]
-		if token.Compare(store.SEPER, store.SEMICOLUMN) {
-			begin, err = p.rootExecute(begin, i)
-			if err != nil {
-				panic(err)
-			}
-			begin = i
+	for true {
+		if begin >= len(p.tokenStore)-1 {
+			break
+		}
+
+		begin, _ = p.rootExecute(begin, len(p.tokenStore)-1)
+
+		if len(p.errorMessages) != 0 {
+			panic(p.errorMessages[len(p.errorMessages)-1])
 		}
 	}
 
-	return tree
+	fmt.Println("Finish Parsing")
 }

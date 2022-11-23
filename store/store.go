@@ -7,7 +7,7 @@ import (
 // 토큰 객체에 대한 정의
 type Token struct {
 	TokenType   TokenType
-	Value       any
+	Value       int
 	Line        int
 	ParsingLine int
 }
@@ -45,8 +45,54 @@ func GetTokenKeyFromInteger(tokenNum TokenType) string {
 	}
 }
 
+func IntToTokenNumber(n int) TokenNumber {
+	switch n {
+	case 43:
+		return PLUS
+	case 45:
+		return MINUS
+	case 42:
+		return MULTIPLY
+	case 47:
+		return DIVIDE
+	case 37:
+		return 37
+	case 40:
+		return LPAREN
+	case 41:
+		return RPAREN
+	case 59:
+		return SEMICOLUMN
+	default:
+		return SEMICOLUMN
+	}
+}
+
+func (t TokenNumber) Number() int {
+	switch t {
+	case PLUS:
+		return 43
+	case MINUS:
+		return 45
+	case MULTIPLY:
+		return 42
+	case DIVIDE:
+		return 47
+	case REMAINDER:
+		return 37
+	case LPAREN:
+		return 40
+	case RPAREN:
+		return 41
+	case SEMICOLUMN:
+		return 59
+	default:
+		return -1
+	}
+}
+
 // 토큰 객체 생성 (토큰 저장 시 이용)
-func New(tokenType TokenType, line int, parsingLine int, value interface{}) *Token {
+func New(tokenType TokenType, line int, parsingLine int, value int) *Token {
 	switch tokenType {
 	case CONST: // 저장하려는 토큰의 타입이 상수일 경우
 		return &Token{TokenType: tokenType, Line: line, ParsingLine: parsingLine, Value: value}
@@ -84,8 +130,8 @@ func checkOperValue(value interface{}, line int, parsingLine int) *Token {
 	}
 }
 
-func (t *Token) Compare(tokenType TokenType, value interface{}) bool {
-	return t.TokenType == tokenType && t == value
+func (t *Token) Compare(tokenType TokenType, value TokenNumber) bool {
+	return t.TokenType == tokenType && t.Value == value.Number()
 }
 
 func (t *Token) CompareType(tokenType TokenType) bool {
