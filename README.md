@@ -1,6 +1,5 @@
-<center><img width="240px" src="https://www.clipartmax.com/png/middle/353-3536792_go-golang-logo-png.png" /></center>
-<center>고 언어로 구현한 사칙연산 컴파일러</center>
-
+# Garithmetic
+Go로 만든 사칙연산 컴파일러
 <br />
 
 # Tech Stack
