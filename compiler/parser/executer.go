@@ -143,6 +143,8 @@ func (p *Parser) addExecute(begin int, end int) (int, error) {
 			p.stack.Put("sub")
 		}
 
+		i = t
+
 		// t번째 토큰이 세미콜론이나 닫힌 괄호라면 무한반복 중지
 		if nToken.Compare(store.SEPER, store.SEMICOLUMN) || nToken.Compare(store.OPER, store.RPAREN) {
 			i = t
