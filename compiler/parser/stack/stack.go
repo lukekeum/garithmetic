@@ -5,13 +5,22 @@ import (
 )
 
 type Stack struct {
-	stack []string
+	stack  []string
+	stacks [][]string
 }
 
 func New() *Stack {
 	var stack []string
+	var stacks [][]string
 
-	return &Stack{stack}
+	return &Stack{stack, stacks}
+}
+
+func (s *Stack) Fin() {
+	stack := s.stack[0:]
+	s.stack = []string{}
+	s.stacks = append(s.stacks, stack)
+	fmt.Printf("semi\n")
 }
 
 func (s *Stack) Put(method string) {
