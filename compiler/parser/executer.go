@@ -20,6 +20,7 @@ func (p *Parser) rootExecute(begin int, end int) (int, error) {
 		}
 		i = t
 		if !p.tokenStore[i].Compare(store.SEPER, store.SEMICOLUMN) {
+			p.stack.Fin()
 			return -1, err
 		}
 	}
